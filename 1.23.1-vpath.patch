@@ -1,0 +1,27 @@
+--- origsrc/geany-1.23.1/plugins/Makefile.am	2013-11-18 21:27:30.394471600 -0600
++++ src/geany-1.23.1/plugins/Makefile.am	2013-11-18 22:40:38.170438000 -0600
+@@ -31,12 +31,11 @@ if PLUGINS
+ if MINGW
+ # build Geany for Windows on non-Windows systems (cross-compile)
+ # (this is a little hack'ish and surely can be improved)
+-DLL_LD_FLAGS = -module -avoid-version
+ MINGW_CFLAGS = \
+ 			-DGEANY_DATADIR=\"data\" \
+ 			-DHAVE_CONFIG_H \
+ 			-DGTK \
+-			-I$(top_srcdir) \
++			-I$(top_builddir) \
+ 			-I$(top_srcdir)/src \
+ 			-I$(top_srcdir)/tagmanager/src \
+ 			-I$(top_srcdir)/scintilla/include \
+--- origsrc/geany-1.23.1/src/Makefile.am	2013-05-19 07:57:33.000000000 -0500
++++ src/geany-1.23.1/src/Makefile.am	2013-11-18 22:31:28.284986300 -0600
+@@ -114,7 +114,7 @@ geany_LDFLAGS =	-mwindows -mms-bitfields
+ WINDRES = $(host_alias)-windres
+ 
+ geany_private.res:
+-	$(WINDRES) -i ../geany_private.rc --input-format=rc -o geany_private.res -O coff;
++	$(AM_V_GEN)$(WINDRES) -I $(srcdir) -i $(top_srcdir)/geany_private.rc --input-format=rc -o geany_private.res -O coff;
+ 
+ clean-local:
+ 	rm -f geany_private.res

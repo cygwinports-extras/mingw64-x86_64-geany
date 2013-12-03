@@ -1,0 +1,36 @@
+CROSS_HOST="x86_64-w64-mingw32"
+inherit cross gnome2
+
+NAME="mingw64-x86_64-geany"
+VERSION=1.23.1
+RELEASE=2
+CATEGORY="Devel"
+SUMMARY="GTK+ text editor and IDE for Win64 toolchain"
+DESCRIPTION="Geany is a text editor using the GTK2 toolkit with basic features
+of an integrated development environment. It was developed to provide a small
+and fast IDE, which has only a few dependencies from other packages. It
+supports many filetypes and has some nice features."
+HOMEPAGE="http://www.geany.org/"
+SRC_URI="http://download.geany.org/geany-${VERSION}.tar.bz2"
+SRC_URI+=" http://git.geany.org/geany/plain/geany.exe.manifest"
+SRC_DIR="geany-${VERSION}"
+PATCH_URI="
+	1.23.1-filetype-cygport.patch
+	1.23.1-install-paths.patch
+	1.23.1-mingw64.patch
+	1.23.1-vpath.patch
+"
+
+DIFF_EXCLUDES="geany.1"
+
+CYGCONF_ARGS="--docdir=${CROSS_DATADIR}/doc/geany"
+
+src_install() {
+	cd ${B}
+	cyginstall man_MANS=
+
+	exeinto ${CROSS_LIBDIR}/geany
+	doexe plugins/*.dll
+}
+
+KEEP_LA_FILES="none"

@@ -1,0 +1,24 @@
+--- origsrc/geany-1.23.1/src/main.c	2013-05-19 07:57:33.000000000 -0500
++++ src/geany-1.23.1/src/main.c	2013-11-18 23:27:38.667761200 -0600
+@@ -406,8 +406,8 @@ static void setup_paths(void)
+ 	 * documentation and data files */
+ 	gchar *install_dir = win32_get_installation_dir();
+ 
+-	data_dir = g_build_filename(install_dir, "data", NULL); /* e.g. C:\Program Files\geany\data */
+-	doc_dir = g_build_filename(install_dir, "doc", NULL);
++	data_dir = g_build_filename(install_dir, "share\\geany", NULL); /* e.g. C:\Program Files\geany\data */
++	doc_dir = g_build_filename(install_dir, "share\\doc\\geany\\html", NULL);
+ 
+ 	change_working_directory_on_windows(install_dir);
+ 
+--- origsrc/geany-1.23.1/src/plugins.c	2013-05-19 07:57:33.000000000 -0500
++++ src/geany-1.23.1/src/plugins.c	2013-11-18 23:26:09.051635500 -0600
+@@ -961,7 +961,7 @@ static gchar *get_plugin_path(void)
+ 	gchar *path;
+ 	gchar *install_dir = win32_get_installation_dir();
+ 
+-	path = g_build_filename(install_dir, "lib", NULL);
++	path = g_build_filename(install_dir, "lib\\geany", NULL);
+ 	g_free(install_dir);
+ 
+ 	return path;
